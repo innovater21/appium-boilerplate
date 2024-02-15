@@ -17,34 +17,49 @@ export const config: WebdriverIO.Config = {
     // Browserstack specific config
     // =============================
     // User configuration
-    user: process.env.BROWSERSTACK_USER || 'BROWSERSTACK_USER',
-    key: process.env.BROWSERSTACK_ACCESS_KEY || 'BROWSERSTACK_ACCESS_KEY',
+    user: process.env.BROWSERSTACK_USER,
+    key: process.env.BROWSERSTACK_ACCESS_KEY,
     // Use browserstack service
-    services: ['browserstack'],
 
-    // ============
-    // Capabilities
-    // ============
-    // For all capabilities please check
-    // http://appium.io/docs/en/writing-running-appium/caps/#general-capabilities
-    capabilities: [
-        {
-            // Set URL of the application under test
-            'appium:app': process.env.BROWSERSTACK_APP_ID || 'BROWSERSTACK_APP_ID',
+    services: [
+        ['browserstack', {
+            user: process.env.BROWSERSTACK_USER,
+            key: process.env.BROWSERSTACK_ACCESS_KEY,
+            app: 'path-to-app',
+            testObservability: true,
+            testObservabilityOptions: {
+                projectName: "Your project name goes here",
+                buildName: "The static build job name goes here e.g. Nightly regression"
+            },
+            browserstackLocal: false
+        }]
+    ],
 
-            'bstack:options': {
-                // Set your BrowserStack config
-                debug: true,
+    // services: ['browserstack'],
 
-                // Specify device and os_version for testing
-                device: 'Google Pixel 3',
-                os_version: '9.0',
+    // // ============
+    // // Capabilities
+    // // ============
+    // // For all capabilities please check
+    // // http://appium.io/docs/en/writing-running-appium/caps/#general-capabilities
+    // capabilities: [
+    //     {
+    //         // Set URL of the application under test
+    //         'appium:app': process.env.BROWSERSTACK_APP_ID || 'BROWSERSTACK_APP_ID',
 
-                // Set other BrowserStack capabilities
-                projectName: 'wdio-test-project',
-                buildName: 'android',
-                sessionName: 'wdio-test'
-            }
-        },
-    ] as WebdriverIO.Capabilities[]
+    //         'bstack:options': {
+    //             // Set your BrowserStack config
+    //             debug: true,
+
+    //             // Specify device and os_version for testing
+    //             device: 'Google Pixel 3',
+    //             os_version: '9.0',
+
+    //             // Set other BrowserStack capabilities
+    //             projectName: 'wdio-test-project',
+    //             buildName: 'android',
+    //             sessionName: 'wdio-test'
+    //         }
+    //     },
+    // ] as WebdriverIO.Capabilities[]
 };
